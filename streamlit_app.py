@@ -38,6 +38,19 @@ if ingredients_list:
             session.sql(my_insert_stmt).collect()
             st.success('Your Smoothie is ordered!', icon="✅")
 
-import requests  
-smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
+import requests
+import streamlit as st
+
+# Correct: just the plain URL string
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+
+# If you want to display the raw response object
 st.text(smoothiefroot_response)
+
+# If you want to display the actual JSON data returned by the API
+if smoothiefroot_response.status_code == 200:
+    data = smoothiefroot_response.json()
+    st.json(data)  # nicely formatted JSON in Streamlit
+else:
+    st.error(f"Request failed with status code {smoothiefroot_response.status_code}")
+
