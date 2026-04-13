@@ -42,7 +42,7 @@ if ingredients_list:
             sf_df = st.dataframe(data=fruityvice_response.json(),use_container_width=True)
         #st.write(ingredients_string)
     # Build insert statement once, after loop
-    my_insert_stmt = f"""
+    my_insert_stmt = """
         insert into smoothies.public.orders(ingredients, name_on_order)
         values ('{ingredients_string.strip()}', '{name_on_order}')
     """
