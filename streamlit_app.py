@@ -40,17 +40,20 @@ if ingredients_list:
 
 import requests
 import streamlit as st
+import pandas as pd
 
 # Correct: just the plain URL string
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
 
-# If you want to display the raw response object
-st.text(smoothiefroot_response)
-
-# If you want to display the actual JSON data returned by the API
 if smoothiefroot_response.status_code == 200:
     data = smoothiefroot_response.json()
-    st.json(data)  # nicely formatted JSON in Streamlit
+    
+    # Convert JSON into a DataFrame
+    df = pd.DataFrame([data])  # wrap in list if it's a single dict
+    
+    # Display the DataFrame in Streamlit
+    st.dataframe(df)
 else:
     st.error(f"Request failed with status code {smoothiefroot_response.status_code}")
+
 
