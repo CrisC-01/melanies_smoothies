@@ -48,9 +48,4 @@ if ingredients_list:
 
 
 smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-if smoothiefroot_response.status_code == 200:
-    data = smoothiefroot_response.json()
-    df = pd.DataFrame([data]) 
-    st.dataframe(df)
-else:
-    st.error(f"Request failed with status code {smoothiefroot_response.status_code}")
+sf_df = st.dataframe(data=smoothiefroot_response.json(),use_container_width=True)
