@@ -41,18 +41,16 @@ if ingredients_list:
             fruityvice_response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{search_on}")
             sf_df = st.dataframe(data=fruityvice_response.json(),use_container_width=True)
         #st.write(ingredients_string)
-    # Build insert statement once, after loop
-            my_insert_stmt = """
-              insert into smoothies.public.orders(ingredients, name_on_order)
-              values ('{ingredients_string.strip()}', '{name_on_order}')
-              """
 
-    # Button outside the loop
-    time_to_insert = st.button('Submit Order')
-    if time_to_insert:   # check button, not ingredients_string
-        session.sql(my_insert_stmt).collect()
-        st.success('Your Smoothie is ordered!', icon="✅")
+my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order)
+values ('""" + ingredients_string + """','""" + name_on_order + """')"""
 
+        #st.write(my_insert_stmt)
+        #st.stop()
+        time_ton_insert = st.button('Submit Order')
+        if ingredients_string:
+            session.sql(my_insert_stmt).collect()
+            st.success('Your Smoothie is ordered!', icon="✅")
 
 
 
